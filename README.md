@@ -1,2 +1,2 @@
 # TerminalTuner
-A lightweight instrument tuner working in the terminal 
+A lightweight instrument tuner working in the terminal environment.
