@@ -1,0 +1,11 @@
+CXX=g++
+CPPFLAGS= -g -Wall
+TARGET = TerminalTuner
+
+all: $(TARGET)
+
+$(TARGET): $(TARGET).c
+    $(CXX) $(CPPFLAGS) -o $(TARGET) $(TARGET)-c
+
+clean:
+    $(RM) $(TARGET)
