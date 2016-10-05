@@ -4,3 +4,4 @@ A lightweight instrument tuner working in the terminal environment. Compatible w
 Dependencies:
 
 1. PortAudio
+2. libsndfile
