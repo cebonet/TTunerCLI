@@ -6,9 +6,9 @@ class autocorrelation {
 private:
     short* buffer;
     int window_size;
-    int m_prime(int lag, short* data);
-    int r_prime(int lag, short* data);
-    int r(int lag, short* data);
+    float  m_prime(int lag, short* data);
+    float r_prime(int lag, short* data);
+    float r(int lag, short* data);
     autocorrelation(){};
 
 public:

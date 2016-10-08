@@ -4,6 +4,7 @@
 
 
 
+
 /*
  * This class contains various autocorrelation functions.
  *
@@ -19,9 +20,16 @@ autocorrelation::autocorrelation(int size){
  */
 
 void autocorrelation::autocorrelation_acf(short* data, float* output){
-    for (int lag=0; lag < window_size/2; lag++){
+    int max_index = 0;
+    int max = 0;
+    for (int lag=0; lag <= window_size/2; lag++){
        output[lag]  = r(lag,data);
+       if (output[lag] > max){
+            max_index = lag;
+            max = output[lag];
+       }
     }
+    std::cout << max_index << std::endl;
 }
 
 /*
@@ -32,7 +40,6 @@ void autocorrelation::autocorrelation_acf(short* data, float* output){
 void autocorrelation::autocorrelation_acf2(short* data, float* output){
     for (int lag=0; lag < window_size; lag++){
        output[lag]  = r_prime(lag,data);
-       
     }
 }
 
@@ -42,7 +49,7 @@ void autocorrelation::autocorrelation_acf2(short* data, float* output){
  */
 
 void autocorrelation::autocorrelation_nacf2(short* data, float* output){
-    int maximum = 0;
+    float maximum = 0;
     for (int lag=0; lag < window_size; lag++){
         if(lag == 0){
             maximum = r_prime(lag,data);
@@ -75,16 +82,16 @@ void autocorrelation::autocorrelation_snac(short* data, float* output){
  */
 
 
-int autocorrelation::r(int lag, short* data){
-    int sum = 0;
-    for (int j=0; j <= (window_size/2)-1; j++){
+float autocorrelation::r(int lag, short* data){
+    float sum = 0;
+    for (int j=0; j <= window_size/2-1; j++){
         sum += data[j]*data[j+lag];
     }
     return sum;
 }
 
-int autocorrelation::r_prime(int lag, short* data){
-    int sum = 0;
+float autocorrelation::r_prime(int lag, short* data){
+    float sum = 0;
     for (int j=0; j <= window_size - 1 - lag; j++){
        sum += data[j] * data[j+lag];
     }
@@ -92,8 +99,8 @@ int autocorrelation::r_prime(int lag, short* data){
 }
 
 
-int autocorrelation::m_prime(int lag, short* data){
-    int sum = 0;
+float autocorrelation::m_prime(int lag, short* data){
+    float sum = 0;
     for (int j=0; j <= window_size - 1 - lag; j++){
         sum += (data[j]*data[j] + data[j+lag] * data[j+lag]);
     }
