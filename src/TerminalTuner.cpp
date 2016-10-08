@@ -34,15 +34,19 @@ int main(){
     acf.autocorrelation_nacf2(buffer, buffer_nacf2);
     acf.autocorrelation_acf2_win(buffer, buffer_acf2_win);
     acf.autocorrelation_snac(buffer, buffer_snac);
-    acf.autocorrelation_wsnac(buffer, buffer_snac);
+    acf.autocorrelation_wsnac(buffer,2, buffer_wsnac);
 
     p.write1DPlotData("plots/wav.dat", buffer, WINDOW_SIZE);
+    p.write1DPlotData("plots/window.dat", buffer_window, WINDOW_SIZE);
+   
     p.write1DPlotData("plots/acf.dat", buffer_acf, WINDOW_SIZE);
     p.write1DPlotData("plots/acf2.dat", buffer_acf2, WINDOW_SIZE);
     p.write1DPlotData("plots/nacf2.dat", buffer_nacf2, WINDOW_SIZE);
     p.write1DPlotData("plots/acf2_win.dat", buffer_acf2_win, WINDOW_SIZE);
     p.write1DPlotData("plots/snac.dat", buffer_snac, WINDOW_SIZE);
-    p.write1DPlotData("plots/window.dat", buffer_window, WINDOW_SIZE);
+    p.write1DPlotData("plots/wsnac.dat", buffer_wsnac, WINDOW_SIZE);
+    
+    
 
 
     exit(0);
