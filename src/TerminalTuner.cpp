@@ -6,6 +6,8 @@
 #include <iostream>
 
 #define WINDOW_SIZE 1024 
+#define WIN_HAMMING 1
+#define WIN_HANN 2
 #define SOUND_PATH soundSamples
 
 using namespace std;
@@ -28,13 +30,13 @@ int main(){
     float* buffer_wsnac = (float*) malloc(sizeof(float)*WINDOW_SIZE);
     
     r.getWavBuffer(buffer);
-    acf.window(2, buffer_window);
+    acf.window(WIN_HANN, buffer_window);
     acf.autocorrelation_acf(buffer, buffer_acf);
     acf.autocorrelation_acf2(buffer, buffer_acf2);
     acf.autocorrelation_nacf2(buffer, buffer_nacf2);
     acf.autocorrelation_acf2_win(buffer, buffer_acf2_win);
     acf.autocorrelation_snac(buffer, buffer_snac);
-    acf.autocorrelation_wsnac(buffer,2, buffer_wsnac);
+    acf.autocorrelation_wsnac(buffer, WIN_HANN , buffer_wsnac);
 
     p.write1DPlotData("plots/wav.dat", buffer, WINDOW_SIZE);
     p.write1DPlotData("plots/window.dat", buffer_window, WINDOW_SIZE);
@@ -46,8 +48,5 @@ int main(){
     p.write1DPlotData("plots/snac.dat", buffer_snac, WINDOW_SIZE);
     p.write1DPlotData("plots/wsnac.dat", buffer_wsnac, WINDOW_SIZE);
     
-    
-
-
     exit(0);
 }
