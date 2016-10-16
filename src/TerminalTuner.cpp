@@ -1,6 +1,7 @@
 #include "wavReader.h"
 #include "autocorrelation.h"
 #include "plotter.h"
+#include "peakpicking.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -16,10 +17,10 @@ int main(){
     plotter p = plotter();    
     wavReader r = wavReader("soundSamples/329.628.wav", WINDOW_SIZE);
     autocorrelation acf = autocorrelation(WINDOW_SIZE);
+    
 
 
-
-    // Plots
+    // Data buffers
     short* buffer = (short*) malloc(sizeof(short)*WINDOW_SIZE);
     float* buffer_window = (float*) malloc(sizeof(float)*WINDOW_SIZE);
     float* buffer_acf = (float*) malloc(sizeof(float)*WINDOW_SIZE);
@@ -28,7 +29,8 @@ int main(){
     float* buffer_acf2_win = (float*) malloc(sizeof(float)*WINDOW_SIZE);
     float* buffer_snac = (float*) malloc(sizeof(float)*WINDOW_SIZE);
     float* buffer_wsnac = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    
+   
+    // Autocorrelation functions
     r.getWavBuffer(buffer);
     acf.window(WIN_HANN, buffer_window);
     acf.autocorrelation_acf(buffer, buffer_acf);
@@ -38,6 +40,11 @@ int main(){
     acf.autocorrelation_snac(buffer, buffer_snac);
     acf.autocorrelation_wsnac(buffer, WIN_HANN , buffer_wsnac);
 
+    // Peak Picking
+    peakpicking pick = peakpicking(buffer_snac, WINDOW_SIZE);
+    pick.getpeaks_x();
+    
+    // Plots
     p.write1DPlotData("plots/wav.dat", buffer, WINDOW_SIZE);
     p.write1DPlotData("plots/window.dat", buffer_window, WINDOW_SIZE);
    
@@ -47,6 +54,8 @@ int main(){
     p.write1DPlotData("plots/acf2_win.dat", buffer_acf2_win, WINDOW_SIZE);
     p.write1DPlotData("plots/snac.dat", buffer_snac, WINDOW_SIZE);
     p.write1DPlotData("plots/wsnac.dat", buffer_wsnac, WINDOW_SIZE);
+
+
     
     exit(0);
 }
