@@ -5,11 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
 
-#define WINDOW_SIZE 1024 
+#define WINDOW_SIZE 1024
 #define WIN_HAMMING 1
 #define WIN_HANN 2
-#define SOUND_PATH soundSamples
+#define WIN_SINE 3
 
 using namespace std;
 
@@ -22,16 +23,16 @@ int main(){
 
     // Data buffers
     short* buffer = (short*) malloc(sizeof(short)*WINDOW_SIZE);
-    float* buffer_window = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    float* buffer_acf = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    float* buffer_acf2 = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    float* buffer_nacf2 = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    float* buffer_acf2_win = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    float* buffer_snac = (float*) malloc(sizeof(float)*WINDOW_SIZE);
-    float* buffer_wsnac = (float*) malloc(sizeof(float)*WINDOW_SIZE);
+    double* buffer_window = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_acf = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_acf2 = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_nacf2 = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_acf2_win = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_snac = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_wsnac = (double*) malloc(sizeof(double)*WINDOW_SIZE);
    
     // Autocorrelation functions
-    r.getWavBuffer(buffer);
+    int sr = r.getWavBuffer(buffer);
     acf.window(WIN_HANN, buffer_window);
     acf.autocorrelation_acf(buffer, buffer_acf);
     acf.autocorrelation_acf2(buffer, buffer_acf2);
@@ -42,7 +43,11 @@ int main(){
 
     // Peak Picking
     peakpicking pick = peakpicking(buffer_snac, WINDOW_SIZE);
-    pick.getpeaks_x();
+    double period = pick.getPeriod();
+    cout << "Period: " << period << endl;
+    cout << "frequency: " << sr/period << endl;
+
+
     
     // Plots
     p.write1DPlotData("plots/wav.dat", buffer, WINDOW_SIZE);

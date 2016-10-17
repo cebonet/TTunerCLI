@@ -9,7 +9,8 @@ private:
 
 public:
     wavReader(const char *filename, int size);
-    void  getWavBuffer(short* buffer);
+    int getWavBuffer(short* buffer);
+    int getSampleRate();
 };
 
 #endif

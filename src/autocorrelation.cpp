@@ -21,7 +21,7 @@ autocorrelation::autocorrelation(int size){
  * Type I
  */
 
-void autocorrelation::autocorrelation_acf(short* data, float* output){
+void autocorrelation::autocorrelation_acf(short* data, double* output){
     for (int lag=0; lag <= window_size/2; lag++){
        output[lag]  = r(lag,data);
     }
@@ -32,7 +32,7 @@ void autocorrelation::autocorrelation_acf(short* data, float* output){
  * Type II
  */
 
-void autocorrelation::autocorrelation_acf2(short* data, float* output){
+void autocorrelation::autocorrelation_acf2(short* data, double* output){
     for (int lag=0; lag < window_size; lag++){
        output[lag]  = r_prime(lag,data);
     }
@@ -43,8 +43,8 @@ void autocorrelation::autocorrelation_acf2(short* data, float* output){
  * Type II
  */
 
-void autocorrelation::autocorrelation_nacf2(short* data, float* output){
-    float maximum = 0;
+void autocorrelation::autocorrelation_nacf2(short* data, double* output){
+    double maximum = 0;
     for (int lag=0; lag < window_size; lag++){
         if(lag == 0){
             maximum = r_prime(lag,data);
@@ -58,7 +58,7 @@ void autocorrelation::autocorrelation_nacf2(short* data, float* output){
  * Type II
  */
 
-void autocorrelation::autocorrelation_acf2_win(short* data, float* output){
+void autocorrelation::autocorrelation_acf2_win(short* data, double* output){
     for (int lag=0; lag < window_size; lag++){
         output[lag]  = r_prime_win(lag, 1, data);
     }
@@ -68,7 +68,7 @@ void autocorrelation::autocorrelation_acf2_win(short* data, float* output){
  * Specially Normalised Autocorrelation Function (SNAC)
  */
 
-void autocorrelation::autocorrelation_snac(short* data, float* output){
+void autocorrelation::autocorrelation_snac(short* data, double* output){
     for (int lag=0; lag < window_size; lag++){
         output[lag] = n_prime(lag,data);
     }
@@ -78,7 +78,7 @@ void autocorrelation::autocorrelation_snac(short* data, float* output){
  * Windowed Special Normalised Autocorrelation Function (WSNAC)
  */
 
-void autocorrelation::autocorrelation_wsnac(short* data, int window_type, float* output){
+void autocorrelation::autocorrelation_wsnac(short* data, int window_type, double* output){
     for (int lag=0; lag < window_size; lag++){
         output[lag] = n_prime_win(lag, window_type, data);
     }
@@ -91,8 +91,8 @@ void autocorrelation::autocorrelation_wsnac(short* data, int window_type, float*
  *
  */
 
-float autocorrelation::r(int lag, short* data){
-    float sum = 0;
+double autocorrelation::r(int lag, short* data){
+    double sum = 0;
     
     for (int j=0; j <= window_size/2-1; j++){
         sum += data[j]*data[j+lag];
@@ -100,8 +100,8 @@ float autocorrelation::r(int lag, short* data){
     return sum;
 }
 
-float autocorrelation::r_prime(int lag, short* data){
-    float sum = 0;
+double autocorrelation::r_prime(int lag, short* data){
+    double sum = 0;
     
     for (int j=0; j <= window_size - 1 - lag; j++){
        sum += data[j] * data[j+lag];
@@ -109,9 +109,9 @@ float autocorrelation::r_prime(int lag, short* data){
     return sum;
 }
 
-float autocorrelation::r_prime_win(int lag, int window_type, short* data){
-    float sum = 0;
-    float* w = (float*) malloc(sizeof(float)*window_size);
+double autocorrelation::r_prime_win(int lag, int window_type, short* data){
+    double sum = 0;
+    double* w = (double*) malloc(sizeof(double)*window_size);
     
     window(window_type,w);
     for (int j=0; j <= window_size - 1 - lag; j++){
@@ -120,18 +120,18 @@ float autocorrelation::r_prime_win(int lag, int window_type, short* data){
     return sum;
 }
 
-float autocorrelation::m_prime(int lag, short* data){
-    float sum = 0;
+double autocorrelation::m_prime(int lag, short* data){
+    double sum = 0;
     for (int j=0; j <= window_size - 1 - lag; j++){
         sum += (data[j]*data[j] + data[j+lag] * data[j+lag]);
     }
     return sum;
 } 
 
-float autocorrelation::m_prime_win(int lag, int window_type, short* data){
-    float sum1 = 0;    
-    float sum2 = 0;
-    float* w= (float*) malloc(sizeof(float)*window_size);
+double autocorrelation::m_prime_win(int lag, int window_type, short* data){
+    double sum1 = 0;    
+    double sum2 = 0;
+    double* w= (double*) malloc(sizeof(double)*window_size);
     window(window_type,w);
     
     for (int j=0; j <= window_size - 1 - lag; j++){
@@ -144,16 +144,16 @@ float autocorrelation::m_prime_win(int lag, int window_type, short* data){
     return sum1 + sum2;
 }
 
-float autocorrelation::n_prime(int lag, short* data){
+double autocorrelation::n_prime(int lag, short* data){
     return ( 2 * r_prime(lag, data)) / m_prime(lag, data);
 }
 
-float autocorrelation::n_prime_win(int lag, int window_type, short* data){
+double autocorrelation::n_prime_win(int lag, int window_type, short* data){
     return ( 2 * r_prime_win(lag,window_type, data)) / m_prime_win(lag, window_type, data);
 }
 
 
-void autocorrelation::window(int type,float* output){
+void autocorrelation::window(int type,double* output){
     for (int j=0; j < window_size; j++){
         if (type == 1) {
             output[j] = w_hamming(j);
@@ -161,17 +161,23 @@ void autocorrelation::window(int type,float* output){
         if (type == 2) {
             output[j] = w_hann(j);
         }
+        if (type == 3) {
+            output[j] = w_sine(j);
+        }
     }
 }
 
 // Hamming window (1)
-float autocorrelation::w_hamming(int n){
+double autocorrelation::w_hamming(int n){
     return 0.53836 - (0.46164 * cos((2 * PI * n)/ window_size));
 }
 
 // Hann window (2)
-float autocorrelation::w_hann(int n){
+double autocorrelation::w_hann(int n){
     return  0.5 * (1- cos( (2 * PI * n) / window_size));
 }
 
-
+// Sine window (3)
+double autocorrelation::w_sine(int n){
+    return sin(PI*n/window_size);
+}

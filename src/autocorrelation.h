@@ -6,26 +6,27 @@ class autocorrelation {
 private:
     short* buffer;
     int window_size;
-    float n_prime(int lag, short* data);
-    float n_prime_win(int lag, int window_type, short* data);
-    float m_prime(int lag, short* data);
-    float m_prime_win(int lag, int window_type, short* data);
-    float r(int lag, short* data);
-    float r_prime(int lag, short* data);
-    float r_prime_win(int lag, int window_type, short* data);
-    float w_hamming(int n);
-    float w_hann(int n);
+    double n_prime(int lag, short* data);
+    double n_prime_win(int lag, int window_type, short* data);
+    double m_prime(int lag, short* data);
+    double m_prime_win(int lag, int window_type, short* data);
+    double r(int lag, short* data);
+    double r_prime(int lag, short* data);
+    double r_prime_win(int lag, int window_type, short* data);
+    double w_hamming(int n);
+    double w_hann(int n);
+    double w_sine(int n);
     autocorrelation(){};
 
 public:
     autocorrelation(int size);
-    void autocorrelation_acf(short* data, float* output);
-    void autocorrelation_acf2(short* data, float* output);
-    void autocorrelation_nacf2(short* data, float* output);
-    void autocorrelation_acf2_win(short* data, float* output);
-    void autocorrelation_snac(short* data, float* output);
-    void autocorrelation_wsnac(short* data, int window_type, float* output);
-    void window(int type, float* output);
+    void autocorrelation_acf(short* data, double* output);
+    void autocorrelation_acf2(short* data, double* output);
+    void autocorrelation_nacf2(short* data, double* output);
+    void autocorrelation_acf2_win(short* data, double* output);
+    void autocorrelation_snac(short* data, double* output);
+    void autocorrelation_wsnac(short* data, int window_type, double* output);
+    void window(int type, double* output);
 };
 
 #endif
