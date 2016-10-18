@@ -10,7 +10,7 @@ wavReader::wavReader(const char *filename, int size){
     
 }
 
-int wavReader::getWavBuffer(short* buffer){
+int wavReader::getWavBuffer(double* buffer){
     SndfileHandle file;
 	file = SndfileHandle (fname) ;
 	printf ("Opened file '%s'\n", fname) ;
