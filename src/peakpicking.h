@@ -14,6 +14,7 @@ private:
 
 public:
     peakpicking(double* input_data, int size);
+    double getMaxAmplitude();
     double getFirstKeyMaxima();
     double getPeriod();
     double qint_x(int i);

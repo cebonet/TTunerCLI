@@ -144,6 +144,25 @@ bool peakpicking::inside_threshold(double candidate, double n_max){
     return (candidate >= (n_max*THRESHOLD));
 }
 
+/* Measure maximum peak amplitude. */
+double peakpicking::getMaxAmplitude(){
+    double max, average, val;
+    max = 0;
+    average = 0;
+    for(int i=0; i< data_size; i++ ){
+        val = data[i];
+        if( val < 0 ) val = -val; /* ABS */
+        if( val > max )
+        {
+            max = val;
+        }
+        average += val;
+    }
+    average = average / data_size;
+    return average;
+}
+
+
 
 
 
