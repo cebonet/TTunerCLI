@@ -1,5 +1,7 @@
 # Custom
 TerminalTuner
+plots/*
+*.vim
 
 # Compiled Object files
 *.slo
