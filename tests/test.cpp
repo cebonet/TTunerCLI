@@ -41,7 +41,7 @@ SCENARIO("Pitch from pure sinus signal 329.628:", "[pitch autocorrelation 329.62
         autocorrelation acf = autocorrelation(WINDOW_SIZE);
 
         // getAudio 
-        int sr = r.getWavBuffer(buffer_pcm); 
+        int sr = r.getWavBuffer(buffer_pcm, true); 
        
         // Apply functions
         acf.window(WIN_HANN, buffer_window);
@@ -55,38 +55,37 @@ SCENARIO("Pitch from pure sinus signal 329.628:", "[pitch autocorrelation 329.62
         WHEN("We use ACF")
         {
             period = pick.getPeriod(buffer_acf);
-                REQUIRE(truncate(sr/period,3) == 329.628 );
+            CHECK(truncate(sr/period,3) == 329.628 );
         }
 
         WHEN("We use ACF type 2")
         {
             period = pick.getPeriod(buffer_acf2);
-                REQUIRE(truncate(sr/period,3) == 329.628 );
+            CHECK(truncate(sr/period,3) == 329.628 );
         }
 
         WHEN("We use normalized - ACF type 2")
         {
             period = pick.getPeriod(buffer_nacf2);
-                REQUIRE(truncate(sr/period,3) == 329.628 );
+            CHECK(truncate(sr/period,3) == 329.628 );
         }
         
         WHEN("We use windowed ACF type 2")
         {
             period = pick.getPeriod(buffer_acf2_win);
-                
-            REQUIRE(truncate(sr/period,3) == 329.628 );
+            CHECK(truncate(sr/period,3) == 329.628 );
         }
         
         WHEN("We use SNAC")
         {
             period = pick.getPeriod(buffer_snac);
-                REQUIRE(truncate(sr/period,3) == 329.628 );
+            CHECK(truncate(sr/period,3) == 329.628 );
         }
         
         WHEN("We use windowed SNAC")
         {
             period = pick.getPeriod(buffer_wsnac);
-                REQUIRE(truncate(sr/period,3) == 329.628 );
+            CHECK(truncate(sr/period,3) == 329.628 );
         }
     }
 }

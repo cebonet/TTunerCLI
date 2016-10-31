@@ -9,7 +9,7 @@ private:
 
 public:
     wavReader(const char *filename, int size);
-    int getWavBuffer(double* buffer);
+    int getWavBuffer(double* buffer, bool isSilent);
     int getSampleRate();
 };
 
