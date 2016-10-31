@@ -23,41 +23,38 @@ using namespace std;
 int main(){
     double last_frequency=0;
     double period; 
+    bool audioStatus;
     
     // Data buffers
-    double* buffer = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_pcm = (double*) malloc(sizeof(double)*WINDOW_SIZE);
     double* buffer_window = (double*) malloc(sizeof(double)*WINDOW_SIZE);
-    double* buffer_snac = (double*) malloc(sizeof(double)*WINDOW_SIZE);
+    double* buffer_acf = (double*) malloc(sizeof(double)*WINDOW_SIZE);
     
     // Instantiate  
     recordaudio audio = recordaudio();
     autocorrelation acf = autocorrelation(WINDOW_SIZE);
-    peakpicking pick = peakpicking(buffer_snac, WINDOW_SIZE);
-    tools tls = tools(buffer_snac, WINDOW_SIZE);
+    peakpicking pick = peakpicking(WINDOW_SIZE);
+    tools tls = tools(buffer_acf, WINDOW_SIZE);
     plotter p = plotter();    
    
     // Create window
-    acf.window(WIN_SINE, buffer_window);
-    
-    bool audioStatus = true;
-    while (audioStatus){
-        audioStatus = audio.getAudioStream(buffer);
-         
+    acf.window(1, buffer_window);
 
-        // Autocorrelation functions
-        acf.autocorrelation_snac(buffer, buffer_snac);
+    do{
+        audioStatus = audio.getAudioStream(buffer_pcm);
+        acf.autocorrelation_snac(buffer_pcm, buffer_acf);
+        period = pick.getPeriod(buffer_acf);
 
-        // Peak Picking
-        period = pick.getPeriod();
-
-        // Print f(0)
         if (tls.getMaxAmplitude() > MIN_AMPLITUDE && period){
             last_frequency = SAMPLE_RATE/period;
-            cout   << "frequency: " << tls.getMaxAmplitude() << "  " << endl;
+            cout   << "frequency: " << last_frequency << "  " << endl;
         }else{
             cout  << "frequency: " << last_frequency << "  "  << endl;
         }
+    
     }
+    while (audioStatus);
+
     audio.closeStream(); 
 }
 

@@ -152,15 +152,19 @@ double autocorrelation::n_prime(int lag, double* data, double* window){
 }
 
 
-void autocorrelation::window(int type,double* output){
-    for (int j=0; j < window_size; j++){
-        if (type == 1) {
+void autocorrelation::window(int type, double* output){
+    if (type == 1) {
+        for (int j=0; j < window_size; j++){
             output[j] = w_hamming(j);
         }
-        if (type == 2) {
+    }
+    if (type == 2) {
+        for (int j=0; j < window_size; j++){
             output[j] = w_hann(j);
         }
-        if (type == 3) {
+    }
+    if (type == 3) {
+        for (int j=0; j < window_size; j++){
             output[j] = w_sine(j);
         }
     }

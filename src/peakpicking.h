@@ -6,20 +6,19 @@
 class peakpicking {
 private:
     int data_size;
-    double * data;
-    double get_n_max();
+    double get_n_max(double* data);
+    std::vector<double> getAllKeyMaximas(double* data);
     bool inside_threshold(double candidate, double n_max);
-    std::vector<double> getAllKeyMaximas();
+    double getFirstKeyMaxima(double* data);
     peakpicking () {}
 
 public:
-    peakpicking(double* input_data, int size);
-    double getMaxAmplitude();
-    double getFirstKeyMaxima();
-    double getPeriod();
-    double qint_x(int i);
-    double qint_y(int i);
-    void showAllpeaks_x();
+    peakpicking(int size);
+    double getMaxAmplitude(double* data);
+    double getPeriod(double* data);
+    double qint_x(double* data, int i);
+    double qint_y(double* data, int i);
+    void showAllpeaks_x(double* data);
 };
 
 #endif
