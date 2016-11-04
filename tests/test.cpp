@@ -44,7 +44,7 @@ SCENARIO("Pitch from pure sinus signal 329.628:", "[pitch autocorrelation 329.62
         int sr = r.getWavBuffer(buffer_pcm, true); 
        
         // Apply functions
-        acf.window(WIN_HANN, buffer_window);
+        acf.window(WIN_HAMMING, buffer_window);
         acf.autocorrelation_acf(buffer_pcm, buffer_acf);
         acf.autocorrelation_acf2(buffer_pcm, buffer_acf2);
         acf.autocorrelation_acf2(buffer_pcm, buffer_acf2_win, buffer_window);

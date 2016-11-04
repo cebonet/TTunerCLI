@@ -34,7 +34,7 @@ int main(){
     recordaudio audio = recordaudio();
     autocorrelation acf = autocorrelation(WINDOW_SIZE);
     peakpicking pick = peakpicking(WINDOW_SIZE);
-    tools tls = tools(buffer_acf, WINDOW_SIZE);
+    tools tls = tools(WINDOW_SIZE);
     plotter p = plotter();    
    
     // Create window
@@ -45,7 +45,7 @@ int main(){
         acf.autocorrelation_snac(buffer_pcm, buffer_acf);
         period = pick.getPeriod(buffer_acf);
 
-        if (tls.getMaxAmplitude() > MIN_AMPLITUDE && period){
+        if (tls.getMaxAmplitude(buffer_acf) > MIN_AMPLITUDE && period){
             last_frequency = SAMPLE_RATE/period;
             cout   << "frequency: " << last_frequency << "  " << endl;
         }else{

@@ -8,8 +8,9 @@ private:
     tools () {}
 
 public:
-    tools(double* input_data, int size);
-    double getMaxAmplitude();
-};
+    tools(int size);
+    double getMaxAmplitude(double *data);
+    void butterworth_filter(float cutoff_frequency, float sampling_rate, double *data);
 
+};
 #endif

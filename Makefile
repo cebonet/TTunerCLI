@@ -27,4 +27,4 @@ run :
 	./TerminalTuner
 
 runTest :
-	./test
+	./test -s
