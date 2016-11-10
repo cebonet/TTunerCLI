@@ -10,7 +10,6 @@ private:
 public:
     tools(int size);
     double getMaxAmplitude(double *data);
-    void butterworth_filter(float cutoff_frequency, float sampling_rate, double *data);
-
+    void butterworth_filter(double *data, int window_size, int sr, int cutOff);
 };
 #endif

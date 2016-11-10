@@ -42,6 +42,7 @@ int main(){
 
     do{
         audioStatus = audio.getAudioStream(buffer_pcm);
+        //tls.butterworth_filter(buffer_pcm, WINDOW_SIZE, SAMPLE_RATE, 150);
         acf.autocorrelation_snac(buffer_pcm, buffer_acf);
         period = pick.getPeriod(buffer_acf);
 

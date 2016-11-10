@@ -27,3 +27,16 @@ double tools::getMaxAmplitude(double *data){
     average = average / data_size;
     return average;
 }
+
+void tools::butterworth_filter(double *data, int window_size, int sr, int cutOff){
+    double* audioData[1];
+    audioData[0] = new double[window_size];
+    Dsp::Filter* f = new Dsp::FilterDesign
+      <Dsp::Butterworth::Design::HighPass <2> >;
+    Dsp::Params params;
+    params[0] = sr; // sample rate
+    params[1] = 2; // order
+    params[2] = cutOff; // corner frequency
+    f->setParams (params);
+    f->process (window_size, audioData);
+}
