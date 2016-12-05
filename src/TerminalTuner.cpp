@@ -10,10 +10,11 @@
 #include <vector>
 #include <alsa/asoundlib.h>
 #include <unistd.h>
+#include <cmath>
 
 #define SAMPLE_RATE 44100
 #define WINDOW_SIZE 1024
-#define MIN_AMPLITUDE 0.025
+#define MIN_AMPLITUDE 0.025/2
 #define WIN_HAMMING 1
 #define WIN_HANN 2
 #define WIN_SINE 3
@@ -23,7 +24,11 @@ using namespace std;
 int main(){
     double last_frequency=0;
     double period; 
+    double amplitude;
+    double frequency;
     bool audioStatus;
+    string MIDI;
+
     
     // Data buffers
     double* buffer_pcm = (double*) malloc(sizeof(double)*WINDOW_SIZE);
@@ -39,20 +44,22 @@ int main(){
    
     // Create window
     acf.window(1, buffer_window);
-
+    
+    // Listen and detect 
     do{
         audioStatus = audio.getAudioStream(buffer_pcm);
-        //tls.butterworth_filter(buffer_pcm, WINDOW_SIZE, SAMPLE_RATE, 150);
         acf.autocorrelation_snac(buffer_pcm, buffer_acf);
         period = pick.getPeriod(buffer_acf);
-
-        if (tls.getMaxAmplitude(buffer_acf) > MIN_AMPLITUDE && period){
-            last_frequency = SAMPLE_RATE/period;
-            cout   << "frequency: " << last_frequency << "  " << endl;
+        amplitude = tls.getMaxAmplitude(buffer_acf);
+        
+        if (amplitude > MIN_AMPLITUDE && period){
+            frequency = SAMPLE_RATE/period;
+            last_frequency = round(frequency/2);
+            MIDI = tls.getMIDI(frequency/2);
+            cout  << "\r" << "frequency: " << last_frequency << "  Note:" << MIDI  << flush;
         }else{
-            cout  << "frequency: " << last_frequency << "  "  << endl;
+            cout  << "\r" << "frequency: " << last_frequency << "  Note:" << MIDI  << flush;
         }
-    
     }
     while (audioStatus);
 

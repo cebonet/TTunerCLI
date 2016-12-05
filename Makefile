@@ -1,14 +1,20 @@
-CPP_FILES := $(wildcard src/*.cpp)
+CPP_FILES := $(wildcard src/*.cpp) 
 OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
-LD_FLAGS = -lrt -lm -lasound -ljack -pthread -lsndfile 
+LD_FLAGS = -g -lrt -lm -lasound -ljack -pthread -lsndfile 
 LIB_FLAGS = lib/libportaudio.a
 
 CPP_TEST_FILES := $(filter-out src/TerminalTuner.cpp src/recordaudio.cpp, $(wildcard */*.cpp))
 OBJ_TEST_FILES := $(addprefix obj/,$(notdir $(CPP_TEST_FILES:.cpp=.o)))
 
+CPP_DSP_FILES := $(wildcard src/DSPFilters/*.cpp)
+OBJ_DSP_FILES := $(addprefix obj/,$(notdir $(CPP_DSP_FILES:.cpp=.o)))
+
 all : TerminalTuner run
 
 testProject: test runTest
+
+DSPFilters: $(OBJ_DSP_FILES)
+	g++  -o $@ $^ 
 
 TerminalTuner: $(OBJ_FILES)
 	g++ $(LD_FLAGS) -o $@ $^ $(LIB_FLAGS)
