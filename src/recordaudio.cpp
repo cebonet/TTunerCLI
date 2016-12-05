@@ -6,11 +6,8 @@
 #include <algorithm>
 #include "recordaudio.h"
 
-#define SAMPLE_RATE	44100
 #define WINDOW_SIZE 1024
 #define WIN_HAMMING 1
-#define WIN_HANN 2
-#define WIN_SINE 3
 
 #define NUM_CHANNELS    (1)
 /* #define DITHER_FLAG     (paDitherOff)  */
@@ -22,18 +19,43 @@
 
 using namespace std;
 
-recordaudio::recordaudio( ){
+recordaudio::recordaudio(bool verbose){
     err = Pa_Initialize();
-    
-    inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
+        
+    if (!verbose){
+        inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
+    }else{
+        cout << "Select recording device:" << endl;
+        for (int i = 0, end = Pa_GetDeviceCount(); i != end; ++i) {
+            PaDeviceInfo const* info = Pa_GetDeviceInfo(i);
+            if (!info) continue;
+            cout << i << ") " <<  info->name << endl;
+        }
+        cin >> device;
+        if (device > Pa_GetDeviceCount() || device < 0){
+            cout << "Not a valid device" << endl;
+            device = -1;
+        }else{
+            inputParameters.device = device; /* default input device */
+        }
+    }
+}
+
+bool recordaudio::openStream(){
+    if (device == -1){
+        return false;
+    }
+
     if (inputParameters.device == paNoDevice) {
-      fprintf(stderr,"Error: No default input device.\n");
+        fprintf(stderr,"Error: No input device.\n");
     }
 
     inputParameters.channelCount = NUM_CHANNELS;
     inputParameters.sampleFormat = PA_SAMPLE_TYPE;
     inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
     inputParameters.hostApiSpecificStreamInfo = NULL;
+
+    samplerate = Pa_GetDeviceInfo(inputParameters.device)->defaultSampleRate;
     
     if( err != paNoError ) 
         error();
@@ -42,7 +64,7 @@ recordaudio::recordaudio( ){
               &stream,
               &inputParameters,
               NULL,     /* &outputParameters, */
-              SAMPLE_RATE,
+              samplerate , 
               WINDOW_SIZE,
               paClipOff,/* we won't output out of range samples so don't bother clipping them */
               NULL,     /* no callback, use blocking API */
@@ -53,7 +75,9 @@ recordaudio::recordaudio( ){
     if( err != paNoError ) 
         error();
 
+    return true;
 }
+
 
 bool recordaudio::getAudioStream(double *buffer){
     err = Pa_StartStream( stream );
