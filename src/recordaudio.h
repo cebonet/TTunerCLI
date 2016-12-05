@@ -8,10 +8,13 @@ private:
     PaStreamParameters inputParameters;
     PaError err;
     PaStream *stream;
+    int samplerate;
+    int device;
     void error();
 
 public:
-    recordaudio();
+    recordaudio(bool verbose);
+    bool openStream();
     bool getAudioStream(double *buffer);
     void closeStream();
 };
