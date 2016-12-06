@@ -14,7 +14,7 @@
 
 #define SAMPLE_RATE 44100
 #define WINDOW_SIZE 1024
-#define MIN_AMPLITUDE 0.025
+#define MIN_AMPLITUDE 0.029
 #define WIN_HAMMING 1
 #define WIN_HANN 2
 #define WIN_SINE 3
@@ -29,10 +29,11 @@ int main (int argc, char *argv[]){
     double period; 
     double amplitude;
     double frequency;
+    double targetFrequency = 0;
     bool audioStatus;
-    string MIDI;
+    int MIDInumber = 0;
+    string MIDInote;
 
-    
     // Data buffers
     double* buffer_pcm = (double*) malloc(sizeof(double)*WINDOW_SIZE);
     double* buffer_window = (double*) malloc(sizeof(double)*WINDOW_SIZE);
@@ -60,16 +61,11 @@ int main (int argc, char *argv[]){
             // The second peak is always the right one, but why?
             // this can however be solved by dividing by 2 - shifts it to second peak
             frequency = SAMPLE_RATE/period/2; 
-            last_frequency = frequency;
-            MIDI = tls.getMIDI(frequency);
-            cout  << "\r" << "frequency: " << last_frequency << "  Note:" << MIDI  << flush;
-            if (frequency > 300 && frequency < 333){
-                p.write1DPlotData("plots/snac.dat", buffer_acf, WINDOW_SIZE);
-                cout << "Plot written!" << endl;
-            }
-        }else{
-            cout  << "\r" << "frequency: " << last_frequency << "  Note:" << MIDI  << flush;
+            MIDInumber = tls.getMIDI(frequency);
+            MIDInote = tls.getMIDIasNote(frequency);
+            targetFrequency = tls.noteToFrequency(MIDInumber); 
         }
+        cout  << "\r" << "Note:" << MIDInote << "  ---  Frequency: " << frequency << "  Target:" << targetFrequency << "   " <<  flush;
     }
     while (audioStatus && streamValid);
 

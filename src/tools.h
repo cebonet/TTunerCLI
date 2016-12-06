@@ -14,7 +14,10 @@ private:
 public:
     tools(int size);
     double getMaxAmplitude(double *data);
-    std::string getMIDI(double frequency);
+    int midiNoteStringToNumber(std::string s);
+    int getMIDI(double frequency);
+    double noteToFrequency(int n);
+    std::string getMIDIasNote(double f);
     //void butterworth_filter(double *data, int window_size, int sr, int cutOff);
 };
 #endif

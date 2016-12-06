@@ -34,21 +34,51 @@ double tools::getMaxAmplitude(double *data){
 }
 
 
-std::string tools::getMIDI(double f){
-    int n = round(57 + 12 * log2(f / BASE_A4));
+int tools::getMIDI(double f){
+    //return round(12 * log2(f / BASE_A4))+57;
+    return round(69 + 12 * log2(f/BASE_A4));
+}
+
+std::string tools::getMIDIasNote(double f){
+    int n = getMIDI(f);
     if (n >= 0 && n <= 119){
         return notes[n % 12] + numberToString((n/12) );
     }
     return "N/A";
 }
  
+double tools::noteToFrequency(int n){
+    double result= 0;
+    if (n >= 0 && n <= 119){
+        result = BASE_A4 * pow(2,(n-69.0)/12.0);
+    }
+    return result;
+}
+int tools::midiNoteStringToNumber(string s){
+    int c,i;
+    int result = -1;
+    if (s.length() == 3){
+        for (int i = 0; i < 12;i++){
+            if (notes[i].at(0) == s.at(0)){
+                c = i;
+                char c = s.at(2);
+                int ic = c - '0';
+                i = ic;
+                result = i*12+c;
+            }
+        }
+    }
+    return result;
+}
 
+// AUX
 string tools::numberToString (int number){
     ostringstream ss;
     ss.clear();
     ss << number;
     return ss.str();
 }
+
 
 /*
 void tools::butterworth_filter(double *data, int window_size, int sr, int cutOff){
