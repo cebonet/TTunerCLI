@@ -42,7 +42,7 @@ int tools::getMIDI(double f){
 std::string tools::getMIDIasNote(double f){
     int n = getMIDI(f);
     if (n >= 0 && n <= 119){
-        return notes[n % 12] + numberToString((n/12) );
+        return notes[n % 12] + numberToString( (n/12)-1 );
     }
     return "N/A";
 }

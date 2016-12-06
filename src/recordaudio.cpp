@@ -4,6 +4,7 @@
 #include <alsa/asoundlib.h>
 #include <unistd.h>
 #include <algorithm>
+#include <sstream>
 #include "recordaudio.h"
 
 #define WINDOW_SIZE 1024
@@ -22,23 +23,25 @@ using namespace std;
 recordaudio::recordaudio(bool verbose){
     err = Pa_Initialize();
         
-    if (!verbose){
-        inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-    }else{
-        cout << "Select recording device:" << endl;
-        for (int i = 0, end = Pa_GetDeviceCount(); i != end; ++i) {
-            PaDeviceInfo const* info = Pa_GetDeviceInfo(i);
-            if (!info) continue;
-            cout << i << ") " <<  info->name << endl;
-        }
-        cin >> device;
+    cout << "Select recording device - press enter for default:" << endl;
+    for (int i = 0, end = Pa_GetDeviceCount(); i != end; ++i) {
+        PaDeviceInfo const* info = Pa_GetDeviceInfo(i);
+        if (!info) continue;
+        cout << i << ") " <<  info->name << endl;
+    }
+    
+    if (std::cin.peek() == '\n') {  //check if next character is newline
+        device = Pa_GetDefaultInputDevice(); /* default input device */
+    } else if (!(std::cin >> device)) { //be sure to handle invalid input
         if (device > Pa_GetDeviceCount() || device < 0){
             cout << "Not a valid device" << endl;
-            device = -1;
         }else{
-            inputParameters.device = device; /* default input device */
+            std::cout << "Invalid input.\n";
         }
+        device = -1;
     }
+    inputParameters.device = device; /* default input device */
+    
 }
 
 bool recordaudio::openStream(){

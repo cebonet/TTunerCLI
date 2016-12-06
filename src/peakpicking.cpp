@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include "peakpicking.h"
-
 #define THRESHOLD 0.8
 
 
@@ -52,7 +51,7 @@ void peakpicking::showAllpeaks_x(double* data){
 double peakpicking::get_n_max(double* data){
     double max=-1;
     for(int i=0;i<data_size;i++){
-        if (i > 0 && data[i] > max) {
+        if (i > 0 && data[i] > max && data[i-1] < data[i]) {
             max = data[i];
         }
     }
@@ -122,7 +121,7 @@ double peakpicking::getFirstKeyMaxima(double* data){
             }
             if(zerocrossed && i == data_size-1){
                 if (inside_threshold(max,n_max)){
-                   return qint_x(data, max_x); // add last ket maxima without negative zero
+                   return qint_x(data, max_x); // add last key maxima without negative zero
                 }
                 max = 0;
             }
