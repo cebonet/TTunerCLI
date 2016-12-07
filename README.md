@@ -1,6 +1,5 @@
 # TerminalTuner
-A lightweight CLI instrument tuner. Compatible with Linux, Mac and Windows. Great for quickly tunning your instrument.
-It is precise and fast.
+A simple and lightweight CLI application. TerminalTuner is an instrument tuner compatible with Linux, Mac and Windows. It is fast and precise. Great for quickly tunning your instrument !
 
 ## How to build
 Just run `make`.
