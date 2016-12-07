@@ -9,7 +9,7 @@ Just run `make`.
 [PortAudio](http://www.portaudio.com) is a dependency and needs to be installed before build. 
 
 ## How to use
-Tun the command `./TerminalTuner` to execute the generated binary file. A list of input available input devices will show up, if unsure just hit enter and it will automatically use the default input device.
+Run the command `./TerminalTuner` to execute the generated binary file. A list of available input devices will show up, if unsure just hit enter and it will automatically use the default input device.
 When running it will show information about the current note, frequency and the targeted frequency for that note.
 
 Example: `Note:E 4  330.15Hz / 329.63Hz`
