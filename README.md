@@ -3,13 +3,13 @@ A lightweight CLI instrument tuner. Compatible with Linux, Mac and Windows. Grea
 It is precise and fast.
 
 ## How to build
-Just run `make` and then run the command `./TerminalTuner` to execute the generated binary file. 
+Just run `make`.
 
 ## Dependencies needed to build
 [PortAudio](http://www.portaudio.com) is a dependency and needs to be installed before build. 
 
 ## How to use
-First choose an input device, if unsure just hit enter and it will automatically use the default input device.
+Tun the command `./TerminalTuner` to execute the generated binary file. A list of input available input devices will show up, if unsure just hit enter and it will automatically use the default input device.
 When running it will show information about the current note, frequency and the targeted frequency for that note.
 
 Example: `Note:E 4  330.15Hz / 329.63Hz`
