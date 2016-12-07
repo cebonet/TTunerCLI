@@ -6,7 +6,7 @@ It is precise and fast.
 Just run `make`.
 
 ## Dependencies needed to build
-[PortAudio](http://www.portaudio.com) is a dependency and needs to be installed before build. 
+[PortAudio](http://www.portaudio.com) is the only dependency needed and is provided in the lib folder. You may need to generate your own shared library if using another platform than Linux(64-bit). 
 
 ## How to use
 Run the command `./TerminalTuner` to execute the generated binary file. A list of available input devices will show up, if unsure just hit enter and it will automatically use the default input device.
