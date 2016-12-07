@@ -1,4 +1,3 @@
-#include "wavReader.h"
 #include "autocorrelation.h"
 #include "plotter.h"
 #include "peakpicking.h"
@@ -72,7 +71,7 @@ int main (int argc, char *argv[]){
         cout  
             << setprecision(5) << "\r" 
             << "Note:" << MIDInote << "  " << frequency << "Hz / " << targetFrequency << "Hz"
-            << " Diff:" <<  frequency - targetFrequency  << "   " <<  flush;
+            <<  flush;
     }
     while (audioStatus && streamValid);
 
