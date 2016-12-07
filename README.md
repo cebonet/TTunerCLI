@@ -1,5 +1,5 @@
-# ttuner
-A simple and lightweight CLI application. ttuner is an instrument tuner compatible with Linux, Mac and Windows. It is fast and precise. Great for quickly tunning your instrument !
+# TTuner
+A simple and lightweight CLI application. TTuner is an instrument tuner compatible with Linux, Mac and Windows. It is fast and precise. Great for quickly tunning your instrument !
 
 ## How to build
 Just run `make`.
