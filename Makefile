@@ -4,20 +4,20 @@ LD_FLAGS = -g -lrt -lm -lasound -ljack -pthread
 LD_TEST_FLAGS = -g -lrt -lm -lasound -ljack -pthread -lsndfile 
 LIB_FLAGS = lib/libportaudio.a
 
-CPP_TEST_FILES := $(filter-out src/TerminalTuner.cpp src/recordaudio.cpp, $(wildcard */*.cpp))
+CPP_TEST_FILES := $(filter-out src/ttuner.cpp src/recordaudio.cpp, $(wildcard */*.cpp))
 OBJ_TEST_FILES := $(addprefix obj/,$(notdir $(CPP_TEST_FILES:.cpp=.o)))
 
 CPP_DSP_FILES := $(wildcard src/DSPFilters/*.cpp)
 OBJ_DSP_FILES := $(addprefix obj/,$(notdir $(CPP_DSP_FILES:.cpp=.o)))
 
-all : TerminalTuner 
+all : ttuner
 
 testProject: test runTest
 
 DSPFilters: $(OBJ_DSP_FILES)
 	g++  -o $@ $^ 
 
-TerminalTuner: $(OBJ_FILES)
+ttuner: $(OBJ_FILES)
 	g++ $(LD_FLAGS) -o $@ $^ $(LIB_FLAGS)
 
 test: $(OBJ_TEST_FILES) 
@@ -31,7 +31,7 @@ obj/%.o: tests/%.cpp
 	g++ $(CC_FLAGS) -c -o $@ $<
 
 run : 
-	./TerminalTuner
+	./ttuner
 
 runTest :
 	./test -s
