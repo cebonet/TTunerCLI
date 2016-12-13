@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <alsa/asoundlib.h>
 #include <unistd.h>
 #include <algorithm>
 #include <sstream>
