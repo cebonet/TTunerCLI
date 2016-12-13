@@ -5,6 +5,8 @@ test
 plots/*
 *.vim
 
+!lib/libportaudio.a
+
 # Compiled Object files
 *.slo
 *.lo
