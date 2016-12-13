@@ -1,7 +1,7 @@
 CPP_FILES := $(filter-out src/wavReader.cpp , $(wildcard src/*.cpp))
 OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 LD_FLAGS = -g -lrt -lm -lasound -ljack -pthread 
-LD_TEST_FLAGS = -g -lrt -lm -lasound -ljack -pthread -lsndfile 
+LD_TEST_FLAGS = -g -lrt -lm -ljack -pthread -lsndfile 
 LIB_FLAGS = lib/libportaudio.a
 
 CPP_TEST_FILES := $(filter-out src/ttuner.cpp src/recordaudio.cpp, $(wildcard */*.cpp))

@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
-#include <alsa/asoundlib.h>
 #include <unistd.h>
 #include <cmath>
 #include <iomanip>
