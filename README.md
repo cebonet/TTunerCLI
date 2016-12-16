@@ -13,6 +13,3 @@ When running it will show information about the current note, frequency and the 
 
 Example: `Note:E 4  330.15Hz / 329.63Hz`
 
-## Compatibility
-In theory it should be compatible with all operating systems considering that PortAudio is cross-platform, however only linux
-has been tested.
