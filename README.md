@@ -1,3 +1,6 @@
+THIS PROJECT FORKED FROM https://github.com/cebonet/TTunerCLI. ALL RIGHTS BELONG TO THE OWNER. ANY LICENSE FILE IN THIS FORKED REPOSITORY CREATED FOR ONLY PULL REQUEST TO ORIGINAL REPOSITORY. THE LICENSE FILE IN THIS REPOSITORY IS NOT THE LICENSE OF THE PROJECT. ASK OWNER FOR ANY LICENSE DETAILS. 
+ORIGINAL REPOSITORY : https://github.com/cebonet/TTunerCLI
+
 # TTuner
 A simple and lightweight CLI application. TTuner is an instrument tuner compatible with Linux, Mac and Windows. It is fast and precise. Great for quickly tunning your instrument !
 
@@ -12,4 +15,7 @@ Run the command `./ttuner` to execute the generated binary file. A list of avail
 When running it will show information about the current note, frequency and the targeted frequency for that note.
 
 Example: `Note:E 4  330.15Hz / 329.63Hz`
+
+THIS PROJECT FORKED FROM https://github.com/cebonet/TTunerCLI. ALL RIGHTS BELONG TO THE OWNER. ANY LICENSE FILE IN THIS FORKED REPOSITORY CREATED FOR ONLY PULL REQUEST TO ORIGINAL REPOSITORY. THE LICENSE FILE IN THIS REPOSITORY IS NOT THE LICENSE OF THE PROJECT. ASK OWNER FOR ANY LICENSE DETAILS. 
+ORIGINAL REPOSITORY : https://github.com/cebonet/TTunerCLI
 
